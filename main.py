@@ -125,6 +125,11 @@ app = ApplicationBuilder().token(TOKEN).build()
 app.add_handler(CommandHandler("start", start))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, buttons))
 
-print("Бот запущен")
+import asyncio
 
-app.run_polling()
+async def main():
+    await app.initialize()
+    await app.start()
+    await app.updater.start_polling()
+
+asyncio.run(main())
