@@ -1,7 +1,7 @@
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, ContextTypes, filters
 
-TOKEN = "ВСТАВЬ_СВОЙ_НОВЫЙ_ТОКЕН"
+TOKEN = "8819651987:AAF00QV5XXrwoTjiGJtTNQTMTrvQ9kfP8go"
 MANAGER_ID = 997176937
 REVIEWS_CHANNEL = "@EclipseAgencyReviews"
 
