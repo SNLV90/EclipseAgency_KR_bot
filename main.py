@@ -16,7 +16,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ["📄 Оставить анкету"],
         ["💰 Зарплата"],
         ["📋 Условия работы"],
-        ["📞 Менеджер"],
+        ["⭐Отзывы"],
         ["📢 Наш канал"],
     ]
 
