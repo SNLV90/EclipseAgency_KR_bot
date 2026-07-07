@@ -16,7 +16,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ["📄 Оставить анкету"],
         ["💰 Зарплата"],
         ["📋 Условия работы"],
-        ["⭐Отзывы"],
+        ["⭐ Отзывы"],
         ["📢 Наш канал"],
     ]
 
@@ -34,90 +34,39 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
 
-    if context.user_data.get("step") == "name":
-        context.user_data["name"] = text
-        context.user_data["step"] = "age"
-
-        await update.message.reply_text("Введите возраст:")
-        return
-
-    if context.user_data.get("step") == "age":
-        context.user_data["age"] = text
-        context.user_data["step"] = "country"
-
-        await update.message.reply_text("Введите гражданство:")
-        return
-
-    if context.user_data.get("step") == "country":
-        name = context.user_data["name"]
-        age = context.user_data["age"]
-        country = text
-
-        user_id = update.effective_user.id
-        username = update.effective_user.username
-
-        await context.bot.send_message(
-            chat_id=MANAGER_ID,
-            text=f"""📄 НОВАЯ АНКЕТА
-
-👤 Имя: {name}
-🎂 Возраст: {age}
-🌍 Гражданство: {country}
-
-📱 Username: @{username if username else 'нет'}
-🆔 Telegram ID: {user_id}
-"""
-        )
-
-        await update.message.reply_text(
-            "✅ Анкета отправлена менеджеру.\nОжидайте ответа."
-        )
-
-        context.user_data.clear()
-        return
-
     if text == "📄 Оставить анкету":
-        context.user_data["step"] = "name"
-        await update.message.reply_text("Введите ваше имя:")
+        await update.message.reply_text(
+            "Напишите:\n\nИмя\nВозраст\nГражданство"
+        )
 
     elif text == "💰 Зарплата":
         await update.message.reply_text(
-            """💰 ЗАРПЛАТА
-
-Средний доход:
-▪️ от 150 000 до 300 000 ₽ в месяц
-
-Доход зависит от города, клуба и графика работы.
-
-Для подробной информации свяжитесь с менеджером."""
+            "💰 Средний доход от 150 000 ₽ до 300 000 ₽ в месяц."
         )
 
     elif text == "📋 Условия работы":
         await update.message.reply_text(
-            """📋 УСЛОВИЯ РАБОТЫ
+            """📋 Условия работы
 
-🇰🇷 Работа в премиальных караоке Южной Кореи
+🇰🇷 Работа в премиум караоке Южной Кореи
 
-✅ Доход от 150 000 до 300 000 ₽ в месяц
 ✅ Бесплатное проживание
-✅ Встреча в аэропорту
 ✅ Помощь с документами
-✅ Поддержка менеджера 24/7
+✅ Встреча и сопровождение
 ✅ Без знания корейского языка
 
-Обязанности:
-• Общение с гостями
-• Поддержание приятной атмосферы
-• Караоке и настольные игры
-
-Для консультации напишите менеджеру."""
+💰 Доход от 150 000 ₽ до 300 000 ₽ в месяц"""
         )
 
-    elif text == "📞 Менеджер":
-        await update.message.reply_text("@SNLVKR")
+    elif text == "⭐ Отзывы":
+        await update.message.reply_text(
+            "⭐ Отзывы девушек:\n\nhttps://t.me/EclipseAgencyReviews"
+        )
 
     elif text == "📢 Наш канал":
-        await update.message.reply_text("https://t.me/KoreaGirlsJob")
+        await update.message.reply_text(
+            "📢 Наш канал:\n\nhttps://t.me/KoreaGirlsJob"
+        )
 
 
 app = ApplicationBuilder().token(TOKEN).build()
@@ -125,5 +74,5 @@ app = ApplicationBuilder().token(TOKEN).build()
 app.add_handler(CommandHandler("start", start))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, buttons))
 
-if __name__ == "__main__":
+if name == "main":
     app.run_polling()
