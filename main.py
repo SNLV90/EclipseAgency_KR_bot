@@ -60,8 +60,8 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     elif text == "⭐ Отзывы":
         await update.message.reply_text(
-            "⭐ Отзывы девушек:\n\nhttps://t.me/EclipseAgencyReviews"
-        )
+            "✍️ Напишите ваш отзыв одним сообщением."
+    )
 
     elif text == "📢 Наш канал":
         await update.message.reply_text(
