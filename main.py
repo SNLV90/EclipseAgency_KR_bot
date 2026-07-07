@@ -7,7 +7,7 @@ from telegram.ext import (
     filters,
 )
 
-TOKEN = "8819651987:AAFI3A7RdLModnEKASzX7mAtaeEf1V4Igx0"
+TOKEN = "8819651987:AAF00QV5XXrwoTjiGJtTNQTMTrvQ9kfP8go"
 MANAGER_ID = 997176937
 
 
