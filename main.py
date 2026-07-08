@@ -23,7 +23,16 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
+buttons_list = ["📄 Оставить анкету", "💰 Зарплата", "📋 Условия работы", "⭐️ Отзывы", "📢 Наш канал"]
 
+if context.user_data.get("application_mode") and text not in buttons_list:
+    await context.bot.send_message(
+        chat_id=MANAGER_ID,
+        text=f"📄 Новая анкета:\n\n{text}"
+    )
+    context.user_data.clear()
+    await update.message.reply_text("✅ Спасибо! Ваша анкета отправлена менеджеру.")
+    return
     if context.user_data.get("review_mode"):
         await context.bot.send_message(
             chat_id=REVIEWS_CHANNEL,
@@ -33,14 +42,15 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("✅ Спасибо! Ваш отзыв опубликован анонимно.")
         return
 
-    if text == "⭐️ Отзывы":
+    if text == "⭐️ Отзывы":context.user_data.pop("application_mode", None)
         context.user_data["review_mode"] = True
         await update.message.reply_text(
             "✍️ Напишите ваш отзыв одним сообщением.\n\nОн будет опубликован анонимно в канале отзывов."
         )
 
   elif "анкет" in text.lower():
-    await update.message.reply_text("Напишите:\n\nИмя\nВозраст\nГражданство")
+ context.user_data["application_mode"] = True
+await update.message.reply_text("Напишите:\n\nИмя\nВозраст\nГражданство")
     
 
     elif text == "💰 Зарплата":
