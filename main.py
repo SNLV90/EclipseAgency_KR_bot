@@ -39,8 +39,9 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "✍️ Напишите ваш отзыв одним сообщением.\n\nОн будет опубликован анонимно в канале отзывов."
         )
 
-    elif text == "📄 Оставить анкету":
-        await update.message.reply_text("Напишите:\n\nИмя\nВозраст\nГражданство")
+  elif text == "📄 Оставить анкету":
+    await update.message.reply_text("Напишите:\n\nИмя\nВозраст\nГражданство")
+    
 
     elif text == "💰 Зарплата":
         await update.message.reply_text("💰 Доход от 150 000 ₽ до 300 000 ₽ в месяц.")
