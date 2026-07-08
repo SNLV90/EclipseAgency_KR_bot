@@ -39,7 +39,7 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "✍️ Напишите ваш отзыв одним сообщением.\n\nОн будет опубликован анонимно в канале отзывов."
         )
 
-  elif text == "📄 Оставить анкету":
+  elif "анкет" in text.lower():
     await update.message.reply_text("Напишите:\n\nИмя\nВозраст\nГражданство")
     
 
