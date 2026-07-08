@@ -5,13 +5,21 @@ TOKEN = "8819651987:AAF00QV5XXrwoTjiGJtTNQTMTrvQ9kfP8go"
 MANAGER_ID = 997176937
 REVIEWS_CHANNEL = "@EclipseAgencyReviews"
 
+BUTTONS = [
+    "📄 Оставить анкету",
+    "💰 Зарплата",
+    "📋 Условия работы",
+    "⭐ Отзывы",
+    "📢 Наш канал",
+]
+
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         ["📄 Оставить анкету"],
         ["💰 Зарплата"],
         ["📋 Условия работы"],
-        ["⭐️ Отзывы"],
+        ["⭐ Отзывы"],
         ["📢 Наш канал"],
     ]
 
@@ -23,40 +31,43 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
-buttons_list = ["📄 Оставить анкету", "💰 Зарплата", "📋 Условия работы", "⭐️ Отзывы", "📢 Наш канал"]
 
-if context.user_data.get("application_mode") and text not in buttons_list:
-    await context.bot.send_message(
-        chat_id=MANAGER_ID,
-        text=f"📄 Новая анкета:\n\n{text}"
-    )
-    context.user_data.clear()
-    await update.message.reply_text("✅ Спасибо! Ваша анкета отправлена менеджеру.")
-    return
-    if context.user_data.get("review_mode"):
+    if context.user_data.get("review_mode") and text not in BUTTONS:
         await context.bot.send_message(
             chat_id=REVIEWS_CHANNEL,
-            text=f"⭐️ Новый отзыв\n\n{text}",
+            text=f"⭐ Новый отзыв\n\n{text}",
         )
         context.user_data.clear()
         await update.message.reply_text("✅ Спасибо! Ваш отзыв опубликован анонимно.")
         return
 
-    if text == "⭐️ Отзывы":context.user_data.pop("application_mode", None)
+    if context.user_data.get("application_mode") and text not in BUTTONS:
+        await context.bot.send_message(
+            chat_id=MANAGER_ID,
+            text=f"📄 Новая анкета:\n\n{text}",
+        )
+        context.user_data.clear()
+        await update.message.reply_text("✅ Спасибо! Ваша анкета отправлена менеджеру.")
+        return
+
+    if text == "⭐ Отзывы":
+        context.user_data.clear()
         context.user_data["review_mode"] = True
         await update.message.reply_text(
             "✍️ Напишите ваш отзыв одним сообщением.\n\nОн будет опубликован анонимно в канале отзывов."
         )
 
-  elif "анкет" in text.lower():
- context.user_data["application_mode"] = True
-await update.message.reply_text("Напишите:\n\nИмя\nВозраст\nГражданство")
-    
+    elif "анкет" in text.lower():
+        context.user_data.clear()
+        context.user_data["application_mode"] = True
+        await update.message.reply_text("Напишите:\n\nИмя\nВозраст\nГражданство")
 
     elif text == "💰 Зарплата":
+        context.user_data.clear()
         await update.message.reply_text("💰 Доход от 150 000 ₽ до 300 000 ₽ в месяц.")
 
     elif text == "📋 Условия работы":
+        context.user_data.clear()
         await update.message.reply_text(
             """📋 Условия работы
 
@@ -71,6 +82,7 @@ await update.message.reply_text("Напишите:\n\nИмя\nВозраст\nГ
         )
 
     elif text == "📢 Наш канал":
+        context.user_data.clear()
         await update.message.reply_text("📢 Наш канал:\n\nhttps://t.me/KoreaGirlsJob")
 
 
